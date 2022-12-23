@@ -6,6 +6,8 @@
 #include "Engine/GameInstance.h"
 #include "PuzzlePlatformsGameInstance.generated.h"
 
+class UUserWidget;
+
 /**
  * 
  */
@@ -19,10 +21,17 @@ public:
 
 	virtual void Init() override;
 
+	UFUNCTION(BlueprintCallable)
+	void LoadMenu();
+
 	UFUNCTION(exec)
 	void Host();
 
 	UFUNCTION(exec)
 	void Join(const FString& Address);
+
+private:
+
+	TSubclassOf<UUserWidget> MenuClass;
 	
 };
