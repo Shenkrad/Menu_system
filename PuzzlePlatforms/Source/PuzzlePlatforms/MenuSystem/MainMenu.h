@@ -20,8 +20,14 @@ class PUZZLEPLATFORMS_API UMainMenu : public UUserWidget
 public:
 	void SetMenuInterface(IMenuInterface* IMenuInterface);
 
+	void Setup();
+
+	// void Teardown(); Teacher Version of removed widget from viewport
+
 protected:
 	virtual bool Initialize() override;
+
+	virtual void OnLevelRemovedFromWorld(ULevel* Level, UWorld* World) override;
 
 private:
 	UPROPERTY(meta = (BindWidget))
