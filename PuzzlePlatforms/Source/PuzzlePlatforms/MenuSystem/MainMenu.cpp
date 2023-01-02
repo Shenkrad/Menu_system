@@ -4,7 +4,8 @@
 #include "MainMenu.h"
 
 #include "Components/Button.h"
-
+#include "Components/WidgetSwitcher.h"
+#include "Components/EditableTextBox.h"
 
 bool UMainMenu::Initialize()
 {
@@ -13,8 +14,17 @@ bool UMainMenu::Initialize()
 
     // TODO: setup
 
-    if(!ensure(Host != nullptr)) return false;
-    Host->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
+    if (!ensure(HostButton != nullptr)) return false;
+    HostButton->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
+
+    if (!ensure(JoinButton != nullptr)) return false;
+    JoinButton->OnClicked.AddDynamic(this, &UMainMenu::OpenJoinMenu);
+
+    if (!ensure(BackButton != nullptr)) return false;
+    BackButton->OnClicked.AddDynamic(this, &UMainMenu::OpenMainMenu);
+
+    if (!ensure(JoinGameButton != nullptr)) return false;
+    JoinGameButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
 
     return true; 
 }
@@ -43,6 +53,30 @@ void UMainMenu::HostServer()
     {
         MenuInterface->Host();
     }
+}
+
+void UMainMenu::JoinServer()
+{
+    if (MenuInterface != nullptr)
+    {
+        if (!ensure(IPAddressField != nullptr)) return;
+        const FString& Address = IPAddressField->GetText().ToString();
+        MenuInterface->Join(Address);
+    }
+}
+
+void UMainMenu::OpenJoinMenu()
+{   
+    if (!ensure(MenuSwitcher != nullptr)) return;
+    if (!ensure(JoinMenu != nullptr)) return;
+    MenuSwitcher->SetActiveWidget(JoinMenu);
+}
+
+void UMainMenu::OpenMainMenu()
+{
+    if (!ensure(MenuSwitcher != nullptr)) return;
+    if (!ensure(MainMenu != nullptr)) return;
+    MenuSwitcher->SetActiveWidget(MainMenu);
 }
 
 void UMainMenu::SetMenuInterface(IMenuInterface* IMenuInterface)
