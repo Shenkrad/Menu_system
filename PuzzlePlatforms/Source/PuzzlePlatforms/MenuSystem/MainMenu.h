@@ -39,6 +39,9 @@ private:
 	UButton* JoinGameButton;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* ExitButton;
+
+	UPROPERTY(meta = (BindWidget))
 	UEditableTextBox* IPAddressField;
 
 	UPROPERTY(meta = (BindWidget))
@@ -61,5 +64,8 @@ private:
 
 	UFUNCTION()
 	void OpenMainMenu();
+
+	UFUNCTION()
+	void ExitGame();
 
 };

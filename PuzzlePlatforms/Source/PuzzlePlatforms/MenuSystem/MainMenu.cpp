@@ -26,6 +26,9 @@ bool UMainMenu::Initialize()
     if (!ensure(JoinGameButton != nullptr)) return false;
     JoinGameButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
 
+    if (!ensure(ExitButton != nullptr)) return false;
+    ExitButton->OnClicked.AddDynamic(this, &UMainMenu::ExitGame);
+
     return true; 
 }
 
@@ -77,4 +80,12 @@ void UMainMenu::OpenMainMenu()
     if (!ensure(MenuSwitcher != nullptr)) return;
     if (!ensure(MainMenu != nullptr)) return;
     MenuSwitcher->SetActiveWidget(MainMenu);
+}
+
+void UMainMenu::ExitGame()
+{
+    if (MenuInterface != nullptr)
+    {
+        MenuInterface->ExitGame();
+    }
 }
